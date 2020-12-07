@@ -1,0 +1,34 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Pokemon API",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Victor-Boyer/cx-react-pokemon.git"
+  },
+  "author1": "Victor Boyer",
+  "author2": "Samy Khelfa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Victor-Boyer/cx-react-pokemon/issues"
+  },
+  "homepage": "https://github.com/Victor-Boyer/cx-react-pokemon#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "knex": "^0.21.12",
+    "mysql": "^2.18.1",
+    "pg": "^8.5.1",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
