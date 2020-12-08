@@ -1,11 +1,13 @@
-const db = require("../models/github_user");
+//const db = require("../models/db_seed/db_init");
+const Users = require("../models/Users");
 const axios = require("axios");
-const { select, from } = require("../models/github_user");
 
 exports.searchUser = (req, res) => {
-  db.select("login")
-    .from("users_data")
-    .where({ login: req.body.username })
+  Users.findAll({
+    where: {
+      login: req.body.username,
+    },
+  })
     .then((data) => {
       if (data.length == 0) {
         console.log("User not found in BDD, searching on github API ... :");
@@ -13,27 +15,18 @@ exports.searchUser = (req, res) => {
           .get("https://api.github.com/users/" + req.body.username + "")
           .then(function (response) {
             console.log("Data fetched for : " + req.body.username);
-            db.insert(response.data)
-              .returning("*")
-              .into("users_data")
-              .then((data) => {
-                console.log("Data saved in DB");
-                res.send(data);
-              });
+            Users.create(response.data).then((data) => {
+              console.log("Data saved in DB");
+              res.send(data);
+            });
           })
           .catch(function (error) {
             console.log("ERROR catch ! : " + error);
             res.send(error);
           });
       } else {
-        console.log("Data found in DB, sending information ...");
-        db.select("*")
-          .from("users_data")
-          .where({ login: req.body.username })
-          .then((data) => {
-            console.log("Data sended !");
-            res.send(data);
-          });
+        console.log("Data found in DB !");
+        res.send(data);
       }
     })
     .catch(function (err) {
@@ -41,40 +34,36 @@ exports.searchUser = (req, res) => {
     });
 };
 
-exports.user = (req, res) => {
-  console.log(req.params.username);
-  db.select("*")
-    .from("users_data")
-    .where({ login: req.params.username })
-    .then((data) => {
+exports.usersList = (req, res) => {
+  Users.findAll().then((data) => {
+    if (data.length == 0) {
+      console.log("User not found in BDD, searching on github API ... :");
+      axios
+        .get("https://api.github.com/users/" + req.body.username + "")
+        .then(function (response) {
+          console.log("Data fetched for : " + req.body.username);
+          Users.create(response.data).then((data) => {
+            console.log("Data saved in DB");
+            res.send(data);
+          });
+        })
+        .catch(function (error) {
+          console.log("ERROR catch ! : " + error);
+          res.send(error);
+        });
+    } else {
       res.send(data);
-    });
+    }
+  });
 };
 
-exports.usersList = (req, res) => {
-  db.select("*")
-    .from("users_data")
-    .then((data) => {
-      if (data.length == 0) {
-        console.log("User not found in BDD, searching on github API ... :");
-        axios
-          .get("https://api.github.com/users/" + req.body.username + "")
-          .then(function (response) {
-            console.log("Data fetched for : " + req.body.username);
-            db.insert(response.data)
-              .returning("*")
-              .into("users_data")
-              .then((data) => {
-                console.log("Data saved in DB");
-                res.send(data);
-              });
-          })
-          .catch(function (error) {
-            console.log("ERROR catch ! : " + error);
-            res.send(error);
-          });
-      } else {
-        res.send(data);
-      }
-    });
+exports.user = (req, res) => {
+  console.log(req.params.username);
+  Users.findAll({
+    where: {
+      login: req.params.username,
+    },
+  }).then((data) => {
+    res.send(data);
+  });
 };

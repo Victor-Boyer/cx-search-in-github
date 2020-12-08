@@ -19,6 +19,7 @@ class DataBody extends Component {
       if (res.status >= 400) {
         throw new Error("Bad response from server");
       }
+      console.log(res);
       this.setState({
         loading: false,
         userData: res.data,

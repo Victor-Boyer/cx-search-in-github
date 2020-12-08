@@ -32,6 +32,7 @@ class SearchUser extends Component {
 
   render() {
     const { username } = this.state;
+    console.log(this.state.response);
     if (!this.state.loading) {
       if (this.state.response.name == "Error") {
         return (
@@ -53,22 +54,41 @@ class SearchUser extends Component {
           </div>
         );
       } else {
-        let url = "2;http://localhost:3000/" + this.state.response[0].login;
-        return (
-          <div className="row">
-            <meta http-equiv="refresh" content={url} />
-            <div className="col s12 m5">
-              <div className="card-panel teal">
-                <span className="white-text">
-                  User found ! <h5> Redirection, please wait ...</h5>
-                </span>
-                <span className="white-text">
-                  <a href="./">Back to menu</a>
-                </span>
+        try {
+          let url = "2;http://localhost:3000/" + this.state.response[0].login;
+          return (
+            <div className="row">
+              <meta http-equiv="refresh" content={url} />
+              <div className="col s12 m5">
+                <div className="card-panel teal">
+                  <span className="white-text">
+                    User found ! <h5> Redirection, please wait ...</h5>
+                  </span>
+                  <span className="white-text">
+                    <a href="./">Back to menu</a>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        );
+          );
+        } catch (err) {
+          return (
+            <div class="row">
+              <div class="col s12 m6">
+                <div class="card red darken-3">
+                  <div class="card-content white-text">
+                    <span class="card-title">ERROR</span>
+                    <p>Oops... Somethings went wrong, Retry later !</p>
+                    <p>Error : {err};</p>
+                  </div>
+                  <div class="card-action">
+                    <a href="/">Menu</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        }
       }
     }
 

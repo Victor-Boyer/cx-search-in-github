@@ -14,6 +14,7 @@ class SingleUser extends Component {
     console.log(this.props.match.params.username);
     const username = this.props.match.params.username;
     axios.get("http://localhost:4000/users/" + username + "").then((res) => {
+      console.log(res);
       this.setState({
         loading: false,
         response: res.data,
