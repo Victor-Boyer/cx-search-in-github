@@ -9,23 +9,4 @@ const knex = require("knex")({
   },
 });
 
-
-
-/* const PokemonEntity  = class {
-    constructor () {}
-    
-    selectPokemon() {
-        db.select('nomfr', 'id').from('pokemon_entity').limit(10)
-        .then((data) => {
-            console.log(data);
-        })
-    }
-
-     getPokemon() {
-        this.selectPokemon(function(data){
-            return data
-        });
-      }
-} */
-
 module.exports = knex;

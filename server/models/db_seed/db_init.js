@@ -22,14 +22,16 @@ console.log(Object.keys(gitData)[30]);
 
 db.schema.hasTable("users_data").then(function (exists) {
   if (!exists) {
-    db.schema.createTable("users_data", function (t) {
-      t.increments("id_user").primary(); // integer id
-      for (let i = 0; i < Object.keys(gitData).length; i++) {
-        console.log(Object.keys(gitData)[i]);
-        t.string(Object.keys(gitData)[i]);
-      }
-    }).then(() => {
-      console.log('Table created.');
-    })
+    db.schema
+      .createTable("users_data", function (t) {
+        t.increments("id_user").primary(); // integer id
+        for (let i = 0; i < Object.keys(gitData).length; i++) {
+          console.log(Object.keys(gitData)[i]);
+          t.string(Object.keys(gitData)[i]);
+        }
+      })
+      .then(() => {
+        console.log("Table created.");
+      });
   }
 });

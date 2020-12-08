@@ -72,5 +72,20 @@ body{
 }
 
 #formImg{
-  width: 20%;
+  width: 10%;
+  margin: 2%;
+}
+
+#table{
+  color: #e0e0e0;
+}
+
+.card-img-top{
+  margin-top: 3%;
+  width: 50%;
+}
+
+#title{
+  margin: 3%;
+  color: #e0e0e0;
 }
